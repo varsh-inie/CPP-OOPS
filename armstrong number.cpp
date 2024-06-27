@@ -1,50 +1,38 @@
 #include <iostream>
 #include <cmath>
-using namespace std;
+int countDigits(int number) {
+    int count = 0;
+    while (number != 0) {
+        number /= 10;
+        ++count;
+    }
+    return count;
+}
 
-class Armstrong {
-private:
-    int number;
+bool isArmstrongNumber(int number) {
+    int originalNumber = number;
+    int result = 0;
+    int digits = countDigits(number);
 
-    int countDigits(int num) {
-        int count = 0;
-        while (num != 0) {
-            num /= 10;
-            count++;
-        }
-        return count;
+    while (originalNumber != 0) {
+        int digit = originalNumber % 10;
+        result += std::pow(digit, digits);
+        originalNumber /= 10;
     }
 
-    bool isArmstrong(int num) {
-        int originalNum = num;
-        int sum = 0;
-        int numDigits = countDigits(num);
-
-        while (num != 0) {
-            int digit = num % 10;
-            sum += pow(digit, numDigits);
-            num /= 10;
-        }
-        return sum == originalNum;
-    }
-public:
-    Armstrong(int num) : number(num) {}
-
-    void checkArmstrong() {
-        if (isArmstrong(number)) {
-            cout << number << " is an Armstrong number." << endl;
-        } else {
-            cout << number << " is not an Armstrong number." << endl;
-        }
-    }
-};
+    return (result == number);
+}
 
 int main() {
     int num;
-    cout << "Enter a number: ";
-    cin >> num;
+    std::cout << "Enter a number: ";
+    std::cin >> num;
+    if (isArmstrongNumber(num)) {
+        std::cout << num << " is an Armstrong number." << std::endl;
+    } else {
+        std::cout << num << " is not an Armstrong number." << std::endl;
+    }
 
-    Armstrong armstrong(num);
-    armstrong.checkArmstrong();
-
+    return 0;
 }
+
